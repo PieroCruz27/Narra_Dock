@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Template</title>
+</head>
+<body>
+    <!-- Fragmento de la cabecera -->
+    <div th:fragment="cabecera">
+        <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+            <div class="container">
+                <a class="navbar-brand" href="#">Mi Tienda</a>
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" 
+                        aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="collapse navbar-collapse" id="navbarNav">
+                    <ul class="navbar-nav me-auto">
+                        <li class="nav-item">
+                            <a class="nav-link" href="/carrito">Inicio</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="/productos">Productos</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="/mis-pedidos">Mis Pedidos</a>
+                        </li>
+                    </ul>
+                    <div class="d-flex">
+                        <div class="navbar-text me-3">
+                            <span id="clienteInfo">Bienvenido</span>
+                        </div>
+                        <button class="btn btn-outline-light me-2" type="button" 
+                                data-bs-toggle="modal" data-bs-target="#loginModal">
+                            Iniciar Sesión
+                        </button>
+                        <button class="btn btn-outline-light me-2" type="button" 
+                                data-bs-toggle="modal" data-bs-target="#registroClienteModal">
+                            Registrarse
+                        </button>
+                        <button id="btnCerrarSesion" class="btn btn-outline-danger" 
+                                style="display: none;">
+                            Cerrar Sesión
+                        </button>
+                        <div class="ms-3 position-relative">
+                            <button class="btn btn-primary" type="button" 
+                                    data-bs-toggle="offcanvas" data-bs-target="#carritoOffcanvas">
+                                <i class="bi bi-cart"></i>
+                                <span id="carritoCount" class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">
+                                    0
+                                </span>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </nav>
+
+        <!-- Offcanvas Carrito -->
+        <div class="offcanvas offcanvas-end" tabindex="-1" id="carritoOffcanvas" 
+             aria-labelledby="carritoOffcanvasLabel">
+            <div class="offcanvas-header">
+                <h5 class="offcanvas-title" id="carritoOffcanvasLabel">Carrito de Compras</h5>
+                <button type="button" class="btn-close text-reset" data-bs-dismiss="offcanvas" 
+                        aria-label="Close"></button>
+            </div>
+            <div class="offcanvas-body">
+                <div id="carritoOffcanvasContent">
+                    <ul id="lista_carrito" class="list-group mb-3"></ul>
+                    <div class="text-end mb-3">
+                        <h5>Total: <span id="total_carrito">0</span> Soles</h5>
+                    </div>
+                    <button id="btn_finalizar_compra" class="btn btn-success w-100">
+                        Finalizar Compra
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Agregar los estilos de Bootstrap Icons -->
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.7.2/font/bootstrap-icons.css">
+        
+        <!-- Script para manejar la navegación -->
+        <script th:inline="javascript">
+  
+        
+        </script>
+        
+        
+    </div>
+</body>
+</html>

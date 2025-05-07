@@ -1,0 +1,219 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Login</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/css/bootstrap.min.css" integrity="sha384-B0vP5xmATw1+K9KRQjQERJvTumQW0nPEzvF6L/Z6nronJ3oUOFUFpCjEUQouq2+l" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdn.datatables.net/1.10.23/css/dataTables.bootstrap4.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css">
+    <link rel="stylesheet" th:href="@{/resources/css/login.css}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+      <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.all.min.js"></script>
+    
+    
+  <style>
+        .full-height {
+            height: 100vh;
+        }
+        .centered-form {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100%;
+        }
+        .bg {
+            background-size: cover;
+            background-position: center;
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+        }
+           .form-container {
+            max-width: 400px; /* Ajusta el ancho máximo del formulario */
+            width: 100%; /* Asegura que el formulario use el ancho disponible */
+        }
+        .form-control, .btn {
+            border-radius: 25px; /* Redondea las esquinas */
+            height: 45px; /* Ajusta la altura de los inputs y el botón */
+        }
+        .btn {
+            font-size: 16px; /* Ajusta el tamaño de la fuente del botón */
+        }
+    </style>
+</head>
+<body>
+    <div class="full-height">
+    
+        <div class="d-flex justify-content-center align-items-center full-height">
+            <div class="container">
+                <div class="row justify-content-center">
+                    <div class="col-md-7">
+                        <div class="mb-4 text-center">
+                            <img alt="Foto Avatar" th:src="@{/resources/img/user-login.png}">
+                            <br><br><br><br>
+                            <h3 class="text-center">Iniciar Sesión</h3>
+                        </div>
+                        <form action="/usuario/login" method="post" class="form">
+                            <div class="form-group first">
+                                <input type="text" class="form-control" placeholder="INGRESAR CORREO" id="username" name="username">
+                            </div>
+                            
+						<div class="form-group last mb-3">
+							    <div class="input-group">
+							        <input type="password" class="form-control" placeholder="INGRESAR CONTRASEÑA" id="password" name="password" aria-describedby="passwordVisibilityToggle">
+							        <div class="input-group-append">
+							            <span class="input-group-text" id="passwordVisibilityToggle" style="cursor: pointer;" onclick="togglePasswordVisibility()">
+							                <i class="far fa-eye" id="togglePassword"></i>
+							            </span>
+							        </div>
+							    </div>
+							</div>
+                            <div class="alert alert-danger" th:if="${param.error}">Clave incorrecta</div>
+                            <div class="alert alert-success" th:if="${param.logout}">Sesión terminada</div>
+                            <input type="submit" value="Log In" class="btn btn-block btn-primary">
+                            <span class="d-block text-center my-4 text-muted"></span>
+                        </form>
+                        <!-- Botón para abrir el modal de registro -->
+                        <div class="text-center">
+                            <p>¿No tienes cuenta? <a href="#" data-toggle="modal" data-target="#modalUsuario">Regístrate aquí</a></p>
+                            <!-- Botón para abrir el modal de registro -->
+                            <button type="button" class="btn btn-success" data-toggle="modal" data-target="#modalUsuario">Registrar</button>
+                        </div>
+				                        <div class="text-center mt-4">
+				    <button type="button" class="btn btn-info" onclick="window.location.href='/carrito/lista'">Ingresar como Invitado</button>
+				</div>
+				                        
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+    
+        <div class="bg" th:style="'background-image: url(https://w.wallhaven.cc/full/kx/wallhaven-kxj3l1.jpg);'"></div>
+    </div>
+
+    <!-- Aquí incluimos el modal del registro que ya tienes en tu página usuario.html -->
+    <div class="modal fade" id="modalUsuario" data-backdrop="static" data-keyboard="false" tabindex="-1"
+        aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered modal-login modal-lg">
+            <div class="modal-content">
+                <div class="modal-header bg-blue-darker">
+              <h4 class="modal-title" style="color: purple;">Registrar Usuario</h4>
+                </div>
+                <div class="modal-body">
+                    <!-- Formulario de registro que ya tienes en usuario.html -->
+                    <form method="POST" id="idRegistra" action="/usuario/registroUsu">
+                        <input type="hidden" id="idCodigo" class="txtcodigo" name="codigo" value="0">
+                        <div class="container">
+                            <div class="row">
+                                <div class="form-group col-md-4">
+                                    <label for="idNombre"><b>Nombres</b></label>
+                                    <input type="text" class="form-control" id="idNombre" placeholder="Ingresar Nombres" name="nombre">
+                                </div>
+                                <div class="form-group col-md-4">
+                                    <label for="idApellido"><b>Apellidos</b></label>
+                                    <input type="text" class="form-control" id="idApellido" placeholder="Ingresar Apellidos" name="apellido">
+                                </div>
+                                <div class="form-group col-md-4">
+                                    <label for="idUsuario"><b>Correo</b></label>
+                                    <input type="text" class="form-control" id="idUsuario" placeholder="Ingresar Correo" name="correo">
+                                </div>
+                                <div class="form-group col-md-4">
+                                    <label for="idClave"><b>Clave</b></label>
+                                    <input type="password" class="form-control" id="idClave" placeholder="Ingresar Clave" name="contrasena">
+                                </div>
+                                <div class="form-group col-md-6">
+                                    <label for="idRol"><b>Rol</b></label>
+                                    <select class="form-control" name="role" id="idRol">
+                                        <option value=" ">[Seleccione el Rol]</option>
+                                        <option th:each="data:${rolesxd}" th:utext="${data.nombre}" th:value="${data.codigo}"></option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-12 text-center mt-4">
+                            <button type="submit" class="btn btn-primary">Registrar</button>
+                            <button type="button" class="btn btn-danger" data-dismiss="modal">Cancelar</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/js/bootstrap.bundle.min.js" integrity="sha384-Piv4xVNRyMGpqkS2by6br4gNJ7DXjqk09RmUpJ8jgGtD7zP9yug3goQfGII0yAns" crossorigin="anonymous"></script>
+    <script src="https://kit.fontawesome.com/08aaa156fb.js" crossorigin="anonymous"></script>
+     <!-- Scripts necesarios para Bootstrap -->
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.3/dist/umd/popper.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/js/bootstrap.min.js"></script>
+    
+    <script>
+    function togglePasswordVisibility() {
+        const passwordField = document.getElementById('password');
+        const toggleIcon = document.getElementById('togglePassword');
+        if (passwordField.type === 'password') {
+            passwordField.type = 'text';
+            toggleIcon.classList.remove('far', 'fa-eye');
+            toggleIcon.classList.add('far', 'fa-eye-slash');
+        } else {
+            passwordField.type = 'password';
+            toggleIcon.classList.remove('far', 'fa-eye-slash');
+            toggleIcon.classList.add('far', 'fa-eye');
+        }
+    };
+    
+    
+    document.getElementById('idRegistra').addEventListener('submit', function(e) {
+        const nombre = document.getElementById('idNombre').value;
+        const apellido = document.getElementById('idApellido').value;
+        const correo = document.getElementById('idUsuario').value;
+        const contrasena = document.getElementById('idClave').value;
+        const rol = document.getElementById('idRol').value;
+
+        // Validar campos vacíos
+        if (!nombre || !apellido || !correo || !contrasena || rol.trim() === '') {
+            e.preventDefault(); // Evita que el formulario se envíe
+            Swal.fire({
+                title: 'Error',
+                text: 'Por favor, complete todos los campos.',
+                icon: 'error',
+                confirmButtonText: 'Aceptar'
+            });
+            return; // Salir de la función
+        }
+    }); // Paréntesis de cierre agregado aquí
+     
+    
+</script>
+  
+    
+    
+
+<script th:inline="javascript" th:if="${MENSAJE != null}">
+    const mensaje = /*[[${MENSAJE}]]*/ '';
+    console.log(mensaje); // Verificar si hay un mensaje
+    if (mensaje) {
+        // Determinar si el mensaje es de error o éxito
+        const isError = mensaje.includes("Error"); // Aquí puedes personalizar la lógica
+        const title = isError ? 'Error!' : 'Éxito!';
+        const icon = isError ? 'error' : 'success';
+        
+        Swal.fire({
+            title: title,
+            text: mensaje,
+            icon: icon,
+            confirmButtonText: 'Aceptar'
+        });
+    }
+</script>
+
+    
+</body>
+</html>

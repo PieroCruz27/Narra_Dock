@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" >
+<head>
+<meta charset="UTF-8">
+<title>Header</title>
+<link rel="stylesheet" th:href="@{/resources/css/header.css}"> 
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/css/bootstrap.min.css">
+</head>
+<style>
+	
+</style>
+<body th:fragment="cabecera">
+    <!-- Fragmento "cabecera" -->
+    <div class="cabecera">    
+        <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+            <div class="container-fluid">
+                <a class="navbar-brand" href="/usuario/principal">INICIO</a>
+                <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="collapse navbar-collapse" id="navbarNav">
+                    <ul class="navbar-nav mr-auto">
+                        <li class="nav-item dropdown">
+                            <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                Registros
+                            </button>
+                            <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                                <!-- Aquí se insertan los enlaces del usuario -->
+                                <div th:each="bean : ${session.ENLACES}">
+                                    <a class="dropdown-item" th:text="${bean.descripcion}" th:href="${bean.ruta}"></a>
+                                </div>
+                            </div>
+                        </li>
+                    </ul>
+                                        <ul class="navbar-nav mr-auto">
+                        <li class="nav-item dropdown">
+                            <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                CRUDS
+                            </button>
+                            <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                                <!-- Aquí se insertan los enlaces del usuario -->
+                                <div th:each="bean : ${session.ENLACES}">
+                                    <a class="dropdown-item" th:text="${bean.descripcion}" th:href="${bean.ruta}"></a>
+                                </div>
+                            </div>
+                        </li>
+                    </ul>
+                    
+                           <!-- Dropdown separado para Consulta de Productos, visible solo para ADMIN -->
+					 <ul class="navbar-nav mr-auto">
+					    <li class="nav-item dropdown">
+					        <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButtonConsulta" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+					            Consulta de Productos
+					        </button>
+					        <div class="dropdown-menu" aria-labelledby="dropdownMenuButtonConsulta">
+					            <a class="dropdown-item" th:href="@{/consultaProductos/lista}">Ver Productos</a>
+					        </div>
+					    </li>
+					</ul>
+                    
+                    
+                             <!-- Nuevo Dropdown para Ajustes -->
+                    <ul class="navbar-nav mr-auto">
+                        <li class="nav-item dropdown">
+                            <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButtonAjustes" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                Ajustes
+                            </button>
+                            <div class="dropdown-menu" aria-labelledby="dropdownMenuButtonAjustes">
+                                <a class="dropdown-item" th:href="@{/usuarioConfi/editarInfo}">Actualizar Información</a>
+                                <a class="dropdown-item" th:href="@{/usuarioConfi/usuarioDelete}">Eliminar Cuenta</a>
+                                <a class="dropdown-item" th:href="@{/usuarioConfi/configurarNotificaciones}">Configurar Notificaciones</a>
+                                <a class="dropdown-item" th:href="@{/usuarioConfi/cambiarContraseña}">Cambiar Contraseña</a>
+                            </div>
+                        </li>
+                    </ul>
+                    
+                    <!-- Muestra el usuario y botón de cerrar sesión -->
+                    <span class="navbar-text text-white mr-3">
+                        Usuario: <span th:text="${session.datosUsuario}"></span>
+                    </span>
+                    <form class="form-inline" method="post" th:action="@{/logout}">
+                        <button type="submit" class="btn btn-success">Cerrar sesión</button>
+                    </form>
+                </div>
+            </div>
+        </nav>
+    </div>
+
+    <!-- Bootstrap JS y Popper.js -->
+    <script src="https://cdn.jsdelivr.net/npm/jquery@3.5.1/dist/jquery.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/js/bootstrap.min.js"></script>
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+<script   src="http://code.jquery.com/jquery-3.3.1.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+<link rel="stylesheet" th:href="@{/resources/css/header.css}"> 
+
+
+</body>
+</html>
+
+
+    
+
+    
+
